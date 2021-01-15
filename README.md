@@ -16,7 +16,13 @@ cargo install funny
 ## Hello, World!
 
 ```hs
-main is Entrypoint
+-- main.fu
 main : [String] . String
-main = _ . "Hello, World!"
+  = _ . "Hello, World!"
+```
+
+Run this using:
+
+```bash
+funny run main.fu
 ```

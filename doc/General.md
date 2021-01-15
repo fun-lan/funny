@@ -56,17 +56,16 @@ Yeah, why not!? If `ghci` or Python REPL can evaluate a function and print its
 result, why can't we just write
 
 ```bash
-funny main.fu --entry cli
+funny run main.fu --entry cli
 ```
 
 to make Funny use function `cli` as an entrypoint. Funny will default to `main`
 by convention, but don't forget about this trick!
 
-Here's the `Entrypoint` trait:
+In general, all entrypoint functions must adhere to the following type signature
 
 ```hs
-trait Entrypoint where
-    foo : [String] . p | p : Show
+foo : [String] . p | p : Show
 ```
 
 The above reads as
@@ -75,12 +74,15 @@ The above reads as
 > returns some polymorphic type `p` that implements the `Show` trait (in other
 > words, we can print it).
 
-Any function that implements the `Entrypoint` trait can be used as an
-entrypoint. The unit type `()` implements `Show`, so you can generally declare
-
 ```hs
-main is Entrypoint    -- derive Entrypoint trait for main
-main : [String] . ()  -- type signature for main
-main =                -- function definition
-  _ . io.println "Hello from main!"
+main : [String] . ()    -- type signature for main
+  = names               -- bind [String] to names
+  . "Hello, "           -- return "Hello, " with appened ...
+  ++ case names of      -- (pattern match on names)
+    []      -> "World"  -- ... "World" if names is empty or
+    [name,] -> name     -- "<name>" appended
+  |> io.println         -- pass to io.println for printing
 ```
+
+To understand what's going on, you need to understand Funny _lambda expressions_
+first. Check this out: [Lambdas](Lambda.md).
