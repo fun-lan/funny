@@ -3,6 +3,10 @@ name = "funny"
 version = "0.0.1-alpha"
 authors = ["Viktor A. Rozenko Voitenko <sharp.vik@gmail.com>"]
 edition = "2018"
+description = "Funny Programming Language"
+readme = "README.md"
+license = "MIT"
+repository = "https://github.com/fun-lan/funny/"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
