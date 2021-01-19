@@ -1,6 +1,32 @@
 # Introduction
 
-> Here's a quick introduction of Funny.
+> ⚠️
+> **The language is not ready yet!**
+> ⚠️
+
+The [documentation](doc) is, _de facto_ a design draft of what's coming. I will
+be building this _incrementally_, starting with an **untyped** basic version of
+the language with a minimalistic standard library and **essential** syntax.
+
+You will be able to install `funny` with `cargo install` as described below,
+and even run it, but it's pretty useless at this point. I am actively working
+on this project and will be posting updates though, so stay tuned!
+
+## Progress
+
+Version: `0.1.0-alpha` (upcoming).
+
+- [ ] Compiler
+    - [ ] Grammar
+    - [ ] CharStream
+    - [ ] Lexer
+    - [ ] Parser
+    - [ ] Abstract Syntax Tree
+- [ ] Runtime
+    - [ ] Reducer
+    - [ ] Runner
+    - [ ] Base (Standard Library)
+    - [ ] `funny run`
 
 ## Install
 
