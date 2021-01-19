@@ -2,6 +2,8 @@
 extern crate clap;
 extern crate idioma;
 
+mod ast;
+mod core;
 mod run;
 
 use clap::{App, Arg, ArgMatches, SubCommand};

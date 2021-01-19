@@ -34,7 +34,7 @@ code files `.fu` are now part of a single package called `db`.
 
 I think it's convenient. You don't have to specify
 
-```hs
+```elm
 module DB (addUser, delUser, user'sAge) where
 ```
 
@@ -64,7 +64,7 @@ by convention, but don't forget about this trick!
 
 In general, all entrypoint functions must adhere to the following type signature
 
-```hs
+```elm
 foo : [String] . p | p : Show
 ```
 
@@ -74,7 +74,7 @@ The above reads as
 > returns some polymorphic type `p` that implements the `Show` trait (in other
 > words, we can print it).
 
-```hs
+```elm
 main : [String] . ()    -- type signature for main
   = names               -- bind [String] to names
   . "Hello, "           -- return "Hello, " with appened ...

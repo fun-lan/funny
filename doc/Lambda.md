@@ -6,14 +6,14 @@ every function in Funny is just a _named lambda expression_.
 
 ## <a name="main-example"></a> Example
 
-```hs
+```elm
 main : [String] . String  -- function declaration
   = _ . "Hello, World!"   -- function alias
 ```
 
 Let's take a closer look at this part:
 
-```hs
+```elm
 _ . "Hello, World!"  -- lambda expression
 ```
 
@@ -28,7 +28,7 @@ that matches `main`'s type signature perfectly! Compiler says "Way to go, man!"
 
 ## Partial Application
 
-```hs
+```elm
 concatenate : [String] . String
   = List.reduce (++) ""
 ```
@@ -37,7 +37,7 @@ This function, just like `main`, takes a list of strings and returns a single
 string. However, what it does is different -- it concatenates all strings such
 that
 
-```hs
+```elm
 >>> concatenate ["Some", "strings", "for", "example"]
 "Somestringsforexample"
 ```
@@ -46,7 +46,7 @@ However, you might notice that we didn't use a lambda expression to define this
 function... So what happened? How did we do it? Well, let's look at the
 `List.reduce` function from the `List` package.
 
-```hs
+```elm
 reduce : (b . a . b) . b . [a] . b
   = op def list .
   case list of
