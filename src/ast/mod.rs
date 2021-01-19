@@ -1,5 +1,5 @@
 //! AST stands for Abstract Syntax Tree. It represents the general structure of a program. Given a
-//! syntax tree, one can properly compute
+//! syntax tree, one can properly reduce and compute the Funny program.
 
 #![allow(dead_code)]
 
