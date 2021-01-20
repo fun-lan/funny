@@ -17,7 +17,7 @@ on this project and will be posting updates though, so stay tuned!
 Version: `0.1.0-alpha` (upcoming).
 
 - [ ] Compiler
-    - [ ] Grammar
+    - [X] Grammar
     - [ ] CharStream
     - [ ] Lexer
     - [ ] Parser
@@ -42,7 +42,7 @@ cargo install funny
 ## Hello, World!
 
 ```hs
--- main.fu
+-- main.fun
 main : [String] . String
   = _ . "Hello, World!"
 ```
@@ -50,5 +50,5 @@ main : [String] . String
 Run this using:
 
 ```bash
-funny run main.fu
+funny run main.fun
 ```

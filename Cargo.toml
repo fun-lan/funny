@@ -11,3 +11,4 @@ repository = "https://github.com/fun-lan/funny/"
 [dependencies]
 clap = "2.33.3"
 idioma = "1.1.0"
+colored = "2.0.0"

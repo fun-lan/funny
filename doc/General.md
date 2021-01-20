@@ -1,4 +1,4 @@
-# Doc
+# General
 
 > This folder contains different documentation files (and sub-folders) for the
 > Funny programming language.
@@ -30,7 +30,7 @@ and too long.
 Funny uses `folders` as package containers. Stick a `.fp` extension to the end
 of a folder's name to let Funny know that it is a Funny Package (FP). For
 example, you could create a `db.fp` folder in your project; all Funny source
-code files `.fu` are now part of a single package called `db`.
+code files `.fun` are now part of a single package called `db`.
 
 I think it's convenient. You don't have to specify
 
@@ -56,7 +56,7 @@ Yeah, why not!? If `ghci` or Python REPL can evaluate a function and print its
 result, why can't we just write
 
 ```bash
-funny run main.fu --entry cli
+funny run main.fun --entry cli
 ```
 
 to make Funny use function `cli` as an entrypoint. Funny will default to `main`
