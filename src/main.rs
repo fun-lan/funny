@@ -4,6 +4,7 @@ extern crate colored;
 extern crate idioma;
 
 mod ast;
+mod char_stream;
 mod cmd;
 
 use clap::{App, Arg, ArgMatches, SubCommand};
@@ -36,7 +37,7 @@ fn cli() -> ArgMatches<'static> {
         .about("CLI tools suite for the Funny Programming Language")
         .subcommand(
             SubCommand::with_name("run")
-                .about("Runs a Funny program")
+                .about("Run a Funny program")
                 .arg(
                     Arg::with_name("SOURCE")
                         .required(true)

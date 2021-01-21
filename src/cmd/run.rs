@@ -2,6 +2,7 @@ use super::def::Cmd;
 use clap::ArgMatches;
 use std::fs;
 
+/// `funny run`: Run a Funny program.
 pub struct RunCmd {}
 
 impl Cmd for RunCmd {
