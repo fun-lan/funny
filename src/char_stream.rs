@@ -5,7 +5,7 @@ use std::fmt::Display;
 /// End of file error message.
 const EOF: &str = "end of file";
 
-/// Character stream powers lexer's ability to go scan source code.
+/// Character stream powers lexer's ability to scan source code.
 pub struct CharStream {
     stream: Vec<char>,
     length: usize,
@@ -58,7 +58,7 @@ impl CharStream {
         idioma::error(format!("[{}:{}] {}", self.row, self.col, msg))
     }
 
-    // Take care of position on newlines.
+    // Take care of position on newlines. Return new (row, col) positions.
     fn newline(&self) -> (usize, usize) {
         if self.this() == '\n' {
             (self.row + 1, 1)
