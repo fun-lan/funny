@@ -2,6 +2,7 @@
 
 use std::fmt::Display;
 
+/// End of file error message.
 const EOF: &str = "end of file";
 
 /// Character stream powers lexer's ability to go scan source code.
@@ -36,8 +37,8 @@ impl CharStream {
         }
     }
 
-    /// Shift reader head one char to the right.
-    pub fn shift(&mut self) -> Result<(), idioma::Error> {
+    /// Shift reader head one char to the right and returns that new character.
+    pub fn shift(&mut self) -> Result<char, idioma::Error> {
         if self.eof() {
             Err(idioma::error(EOF))
         } else {
@@ -45,7 +46,7 @@ impl CharStream {
             self.row = row;
             self.col = col;
             self.pos += 1;
-            Ok(())
+            self.peek()
         }
     }
 
@@ -94,11 +95,10 @@ mod char_stream_tests {
         assert_eq!(1, cs.col, "invlaid column");
         assert_eq!(2, cs.row, "invlaid row");
         assert_eq!(3, cs.pos, "invalid position");
-        cs.shift()?;
-        if let Ok(_) = cs.peek() {
+        if let Ok(_) = cs.shift() {
             panic!("EOF expected but not found");
         }
-        if let Ok(_) = cs.shift() {
+        if let Ok(_) = cs.peek() {
             panic!("EOF expected but not found");
         }
         Ok(())
