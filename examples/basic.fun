@@ -9,5 +9,5 @@ It should be executable via the following command and produce specified output:
 
 -}
 
---   : List String . String
-main = args . "Hello, " ++ concat args
+--   : String
+main = "hello world"

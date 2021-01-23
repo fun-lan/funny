@@ -3,13 +3,15 @@
 
 #![allow(dead_code)]
 
+/// Statement is a piece of code that adds context to the program. For example, global function
+/// alias declaration simply adds a new name to the current package.
+pub enum Statement {
+    FunAlias(Identifier, Expr), // main = "hello world"
+}
+
 /// Expressions make up the main functional part of the language.
 pub enum Expr {
-    Literal(Atom),                     // "hello world"
-    Operator(Op),                      // 1 + 2
-    Identifier(String),                // sum
-    Lambda(String, Box<Expr>),         // a b . a
-    Application(Box<Expr>, Box<Expr>), // sum list
+    Literal(Atom), // "hello world"
 }
 
 /// Atoms are primitive types that cannot be derived from any other types.
@@ -17,7 +19,7 @@ pub enum Atom {
     Str(Vec<char>), // "hello world"
 }
 
-/// Operators on Atoms.
-pub enum Op {
-    Concat(Atom, Atom), // `++`
+pub enum Identifier {
+    Value(String), // is_even
+    Type(String),  // List
 }
