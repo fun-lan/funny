@@ -3,9 +3,8 @@ extern crate clap;
 extern crate colored;
 extern crate idioma;
 
-mod ast;
-mod char_stream;
 mod cmd;
+mod compiler;
 
 use clap::{App, Arg, ArgMatches, SubCommand};
 use cmd::{def::Cmd, run::RunCmd};
@@ -14,14 +13,10 @@ use colored::Colorize;
 fn main() {
     let commands = vec![Box::new(RunCmd {}) as Box<dyn Cmd>];
 
-    let app = cli();
-
+    let args = cli();
     for cmd in commands.iter() {
-        // The `allow(unused)` directive is here because the compiler can't properly understand the
-        // flow of control within `exit_if_error` and gives a warning.
-        #[allow(unused)]
-        if let Some(result) = matched(cmd, &app) {
-            idioma::exit_if_error(result);
+        if let Some(result) = matched(cmd, &args) {
+            let _ = idioma::exit_if_error(result);
             return;
         }
     }
