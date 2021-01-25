@@ -14,14 +14,13 @@ on this project and will be posting updates though, so stay tuned!
 
 ## Progress
 
-Version: `0.1.0-alpha` (upcoming).
+Next version: `0.1.0-alpha`.
 
 - [ ] Compiler
     - [X] Grammar
-    - [ ] CharStream
     - [ ] Lexer
-    - [ ] Parser
     - [ ] Abstract Syntax Tree
+    - [ ] Parser
 - [ ] Runtime
     - [ ] Reducer
     - [ ] Runner
