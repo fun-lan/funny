@@ -11,6 +11,7 @@
 mod ast;
 mod lexer;
 mod parser;
+mod syntax;
 mod token;
 
 /// Use me to compile your Funny source code and produce AST!

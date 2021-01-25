@@ -9,4 +9,4 @@
 #
 
 #    : String
-main = "hello world"
+main = "hello world";

@@ -3,12 +3,12 @@ extern crate clap;
 extern crate colored;
 extern crate idioma;
 
-mod cmd;
+mod command;
 mod compiler;
 
 use clap::{App, Arg, ArgMatches, SubCommand};
-use cmd::{def::Cmd, run::RunCmd};
 use colored::Colorize;
+use command::{def::Cmd, run::RunCmd};
 
 fn main() {
     let commands = vec![Box::new(RunCmd {}) as Box<dyn Cmd>];
