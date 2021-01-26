@@ -16,19 +16,6 @@ fn next(progress: Progress) -> Progress {
     (progress.0, progress.1 + 1)
 }
 
-/// Skips to newline, consuming the newline char itself.
-fn skip_to_newline(progress: Progress) -> Progress {
-    if let Some(current) = current_char(progress) {
-        if current == '\n' {
-            next(progress)
-        } else {
-            skip_to_newline(next(progress))
-        }
-    } else {
-        progress
-    }
-}
-
 /// Get `char` under cursor from `Progress`.
 fn current_char(progress: Progress) -> Option<char> {
     let (source, position) = progress;
@@ -45,6 +32,34 @@ fn eof(progress: Progress) -> bool {
     position >= source.len()
 }
 
+/// Return `true` on EOF, otherwise apply predicate to `current_char`.
+fn check_current_char_or_true(progress: Progress, predicate: fn(char) -> bool) -> bool {
+    if let Some(current) = current_char(progress) {
+        predicate(current)
+    } else {
+        true
+    }
+}
+
+/// In case `check_current_char_or_true` returns `true`, return `progress` unchanged, otherwise,
+/// apply `transform` and return the result.
+fn check_current_char_or_do(
+    progress: Progress,
+    predicate: fn(char) -> bool,
+    transform: fn(Progress) -> Progress,
+) -> Progress {
+    if check_current_char_or_true(progress, predicate) {
+        progress
+    } else {
+        transform(progress)
+    }
+}
+
+/// Skips to newline, consuming the newline char itself.
+fn skip_to_newline(progress: Progress) -> Progress {
+    check_current_char_or_do(progress, |c| c == '\n', |p| skip_to_newline(next(p)))
+}
+
 /// An auxiliary function used by `tokenize` to retrieve all tokens from the input `String`.
 fn lex_all(_progress: Progress) -> Result<Vec<Token>, idioma::Error> {
     todo!("sharpvik")
@@ -52,51 +67,29 @@ fn lex_all(_progress: Progress) -> Result<Vec<Token>, idioma::Error> {
 
 /// Skip all whitespace and comments to get to the significant bits.
 fn skip_whitespace_and_comments(progress: Progress) -> Progress {
-    if eof(progress) {
-        progress
-    } else if whitespace_and_comments_skipped(progress) {
-        progress
-    } else {
-        let no_whitespace: Progress = skip_whitespace(progress);
-        let no_comment: Progress = skip_comments(no_whitespace);
-        skip_whitespace_and_comments(no_comment)
-    }
-}
-
-/// Check that all whitespace and comments are skipped. This is a helper function that makes sure
-/// that we catch all base cases in `skip_whitespace_and_comments`.
-fn whitespace_and_comments_skipped(progress: Progress) -> bool {
-    if let Some(current) = current_char(progress) {
-        !(current.is_ascii_whitespace() || current == syntax::COMMENT_STARTER)
-    } else {
-        true
-    }
+    check_current_char_or_do(
+        progress,
+        |c| !(c.is_ascii_whitespace() || c == syntax::COMMENT_STARTER),
+        |p| skip_whitespace_and_comments(skip_comments(skip_whitespace(p))),
+    )
 }
 
 /// Skip all whitespace.
 fn skip_whitespace(progress: Progress) -> Progress {
-    if let Some(current) = current_char(progress) {
-        if current.is_ascii_whitespace() {
-            skip_whitespace(next(progress))
-        } else {
-            progress
-        }
-    } else {
-        progress
-    }
+    check_current_char_or_do(
+        progress,
+        |c| !c.is_ascii_whitespace(),
+        |p| skip_whitespace(next(p)),
+    )
 }
 
 /// Skip all comments.
 fn skip_comments(progress: Progress) -> Progress {
-    if let Some(current) = current_char(progress) {
-        if current == syntax::COMMENT_STARTER {
-            skip_comments(skip_to_newline(progress))
-        } else {
-            progress
-        }
-    } else {
-        progress
-    }
+    check_current_char_or_do(
+        progress,
+        |c| c != syntax::COMMENT_STARTER,
+        |p| skip_comments(skip_to_newline(p)),
+    )
 }
 
 #[cfg(test)]
@@ -104,7 +97,7 @@ mod tests {
     use super::*;
 
     fn check_answer(input: &str, f: fn(Progress) -> Progress, expect: usize) {
-        let vector: Vec<char> = String::from(input).chars().collect();
+        let vector: Vec<char> = input.to_string().chars().collect();
         let init: Progress = (&vector, 0);
         let (_, answer) = f(init);
         assert_eq!(expect, answer, "shoul've skipped to #{}", expect);
